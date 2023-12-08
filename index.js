@@ -5,16 +5,12 @@ const {dbconnection} = require('./database/config.js')
 
 const app = express()
 app.use(cors())
+app.use(express.json())
 
 dbconnection();
 
-app.get("/",(req,res)=>{
-    res.json({
-        ok: true,
-        msg : "holi"
-    })
-});
-
+app.use('/api/usuarios', require('./routes/usuarios'))
+app.use('/api/login', require('./routes/auth'))
 
 
 app.listen(process.env.PORT, ()=>{

@@ -82,9 +82,18 @@ const loginGoogle = async(req,res= response)=>{
 const renovarToken = async (req,res=response)=>{
     const uid = req.uid
     const token = await generarJWT(uid);
+    const usuarioDB = await Usuario.findById(uid);
+    if(!usuarioDB)  {
+        return res.status(404).json({
+            ok : false,
+            msg : "No existe un usuario con ese ID"
+        })
+    }
+    
     res.json({
         ok:true,
-        token
+        token,
+        Usuario:usuarioDB
     })
 }
 
